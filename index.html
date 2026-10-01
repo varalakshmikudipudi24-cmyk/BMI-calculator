@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>SmartBMI | Personal Health Analytics</title>
+
+    <link rel="stylesheet" href="style.css">
+
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+
+<body>
+
+    <!-- Background Effects -->
+    <div class="bg-circle circle-one"></div>
+    <div class="bg-circle circle-two"></div>
+
+    <!-- NAVBAR -->
+    <nav class="navbar">
+
+        <div class="logo">
+            <div class="logo-icon">S</div>
+
+            <div>
+                <h2>Smart<span>BMI</span></h2>
+                <small>Personal Health Analytics</small>
+            </div>
+        </div>
+
+        <button id="themeBtn" class="theme-btn">
+            🌙
+        </button>
+
+    </nav>
+
+
+    <!-- MAIN -->
+    <main class="container">
+
+        <!-- HERO -->
+        <section class="hero">
+
+            <div class="hero-text">
+
+                <div class="badge">
+                    ✨ SMART HEALTH ANALYTICS
+                </div>
+
+                <h1>
+                    Know your body.<br>
+                    <span>Understand your progress.</span>
+                </h1>
+
+                <p>
+                    Calculate your BMI, understand your health category,
+                    track your progress and simulate your future BMI.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- INPUT + RESULT -->
+        <section class="main-grid">
+
+            <!-- INPUT CARD -->
+            <div class="card input-card">
+
+                <div class="card-title">
+                    <div>
+                        <span class="mini-label">STEP 01</span>
+                        <h2>Personal Details</h2>
+                    </div>
+
+                    <div class="card-icon">👤</div>
+                </div>
+
+
+                <!-- Name -->
+                <div class="input-group">
+
+                    <label>Your Name</label>
+
+                    <input
+                        type="text"
+                        id="name"
+                        placeholder="Enter your name"
+                    >
+
+                </div>
+
+
+                <!-- Age -->
+                <div class="input-group">
+
+                    <label>Age</label>
+
+                    <input
+                        type="number"
+                        id="age"
+                        placeholder="Enter age"
+                        min="1"
+                        max="120"
+                    >
+
+                </div>
+
+
+                <!-- Height -->
+                <div class="input-group">
+
+                    <label>Height</label>
+
+                    <div class="input-with-unit">
+
+                        <input
+                            type="number"
+                            id="height"
+                            placeholder="170"
+                            min="50"
+                            max="250"
+                        >
+
+                        <span>cm</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Weight -->
+                <div class="input-group">
+
+                    <label>Weight</label>
+
+                    <div class="input-with-unit">
+
+                        <input
+                            type="number"
+                            id="weight"
+                            placeholder="65"
+                            min="10"
+                            max="300"
+                            step="0.1"
+                        >
+
+                        <span>kg</span>
+
+                    </div>
+
+                </div>
+
+
+                <button id="calculateBtn" class="primary-btn">
+
+                    <span>Analyze My BMI</span>
+
+                    <span class="arrow">→</span>
+
+                </button>
+
+
+                <p id="errorMessage" class="error-message"></p>
+
+            </div>
+
+
+            <!-- RESULT CARD -->
+            <div class="card result-card">
+
+                <div class="card-title">
+
+                    <div>
+                        <span class="mini-label">STEP 02</span>
+                        <h2>Your BMI</h2>
+                    </div>
+
+                    <div class="status-dot"></div>
+
+                </div>
+
+
+                <!-- BMI Circle -->
+                <div class="bmi-display">
+
+                    <div class="bmi-circle">
+
+                        <div class="circle-inner">
+
+                            <span id="bmiValue">--</span>
+
+                            <small>BMI</small>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+
+                <div id="category" class="category">
+                    Enter your details
+                </div>
+
+
+                <!-- Range -->
+                <div class="range-section">
+
+                    <div class="range-title">
+
+                        <span>Healthy BMI Range</span>
+
+                        <strong>18.5 - 24.9</strong>
+
+                    </div>
+
+                    <div class="range-bar">
+
+                        <div class="range-under"></div>
+                        <div class="range-healthy"></div>
+                        <div class="range-over"></div>
+                        <div class="range-obese"></div>
+
+                        <div id="rangeMarker" class="range-marker"></div>
+
+                    </div>
+
+                    <div class="range-labels">
+
+                        <span>Under</span>
+                        <span>Healthy</span>
+                        <span>Over</span>
+                        <span>High</span>
+
+                    </div>
+
+                </div>
+
+
+                <!-- Quick Stats -->
+                <div class="quick-stats">
+
+                    <div class="stat-box">
+
+                        <span>Weight</span>
+
+                        <strong id="resultWeight">--</strong>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <span>Height</span>
+
+                        <strong id="resultHeight">--</strong>
+
+                    </div>
+
+                    <div class="stat-box">
+
+                        <span>Status</span>
+
+                        <strong id="resultStatus">--</strong>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- SMART INSIGHT -->
+        <section class="card insight-card">
+
+            <div class="insight-icon">
+                🧠
+            </div>
+
+            <div>
+
+                <span class="mini-label">SMART INSIGHT</span>
+
+                <h2 id="insightTitle">
+                    Your personalized insight will appear here.
+                </h2>
+
+                <p id="insightText">
+                    Enter your details and click "Analyze My BMI"
+                    to generate your BMI insight.
+                </p>
+
+            </div>
+
+        </section>
+
+
+        <!-- WEIGHT SIMULATOR -->
+        <section class="card simulator-card">
+
+            <div class="section-header">
+
+                <div>
+
+                    <span class="mini-label">SMART FEATURE</span>
+
+                    <h2>Weight Simulator</h2>
+
+                    <p>
+                        Move the slider and see how your BMI changes.
+                    </p>
+
+                </div>
+
+                <div class="sim-icon">
+                    🎯
+                </div>
+
+            </div>
+
+
+            <div class="simulator">
+
+                <div class="sim-values">
+
+                    <div>
+
+                        <span>Selected Weight</span>
+
+                        <strong>
+                            <span id="sliderWeight">65</span> kg
+                        </strong>
+
+                    </div>
+
+                    <div class="projected">
+
+                        <span>Projected BMI</span>
+
+                        <strong id="projectedBMI">
+                            22.5
+                        </strong>
+
+                    </div>
+
+                </div>
+
+
+                <input
+                    type="range"
+                    id="weightSlider"
+                    min="30"
+                    max="150"
+                    value="65"
+                    step="0.5"
+                >
+
+
+                <div class="slider-labels">
+
+                    <span>30 kg</span>
+                    <span>90 kg</span>
+                    <span>150 kg</span>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- HISTORY + CHART -->
+        <section class="dashboard-grid">
+
+
+            <!-- HISTORY -->
+            <div class="card history-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="mini-label">YOUR DATA</span>
+
+                        <h2>BMI History</h2>
+
+                    </div>
+
+                    <button
+                        id="clearHistory"
+                        class="small-btn"
+                    >
+                        Clear
+                    </button>
+
+                </div>
+
+
+                <div id="historyList" class="history-list">
+
+                    <div class="empty-history">
+
+                        📊
+
+                        <p>
+                            Your BMI history will appear here.
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- CHART -->
+            <div class="card chart-card">
+
+                <div class="section-header">
+
+                    <div>
+
+                        <span class="mini-label">PROGRESS</span>
+
+                        <h2>BMI Journey</h2>
+
+                    </div>
+
+                    <div class="chart-icon">
+                        📈
+                    </div>
+
+                </div>
+
+
+                <div class="chart-container">
+
+                    <canvas id="bmiChart"></canvas>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- AI ASSISTANT -->
+        <section class="card assistant-card">
+
+            <div class="assistant-header">
+
+                <div class="robot">
+                    🤖
+                </div>
+
+                <div>
+
+                    <span class="mini-label">COMING SOON</span>
+
+                    <h2>SmartBMI AI Assistant</h2>
+
+                    <p>
+                        Ask questions about BMI and healthy habits.
+                    </p>
+
+                </div>
+
+            </div>
+
+
+            <div class="assistant-preview">
+
+                <div class="message ai-message">
+
+                    <span>🤖</span>
+
+                    <p>
+                        Hi! I'm your SmartBMI assistant.
+                        Analyze your BMI first and I can explain
+                        what the result means.
+                    </p>
+
+                </div>
+
+            </div>
+
+        </section>
+
+
+        <!-- FOOTER -->
+        <footer>
+
+            <p>
+                SmartBMI © 2026 | B.Tech Project
+            </p>
+
+            <p>
+                BMI is a screening measure and is not a medical diagnosis.
+            </p>
+
+        </footer>
+
+    </main>
+
+
+    <script src="script.js"></script>
+
+</body>
+</html>
